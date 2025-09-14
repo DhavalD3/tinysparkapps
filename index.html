@@ -1,1 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>tinysparkapps — Building something amazing</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --panel:#0b1b2b;
+      --accent:#00d4ff;
+      --accent-2:#7cffb2;
+      --muted:#9fb3c8;
+      --glass: rgba(255,255,255,0.04);
+      --mono: 'Segoe UI Mono', 'Roboto Mono', monospace;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,-apple-system,Helvetica,Arial; background: radial-gradient(1000px 500px at 10% 10%, rgba(0,212,255,0.03), transparent), var(--bg); color:#e6f0fb}
+
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:48px}
+    .card{
+      width:min(980px,96%);
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+      border:1px solid rgba(255,255,255,0.04);
+      border-radius:16px;
+      padding:28px;display:grid;grid-template-columns:360px 1fr;gap:28px;align-items:center;
+      box-shadow: 0 6px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+    }
+
+    /* Logo */
+    .logo{
+      font-weight:700;font-size:22px;letter-spacing:0.6px;
+      display:flex;align-items:center;gap:14px;color:var(--accent-2)
+    }
+    .spark{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,212,255,0.08);font-weight:800}
+    .brand-sub{font-size:12px;color:var(--muted);margin-top:6px}
+
+    /* Robot area */
+    .robot-stage{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0));border-radius:12px;padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px}
+    .robot{width:260px;height:220px;position:relative}
+
+    /* robot parts */
+    .body{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:160px;height:130px;background:linear-gradient(180deg,#0e2a3a,#04202b);border-radius:16px;border:1px solid rgba(255,255,255,0.03);box-shadow:inset 0 4px 14px rgba(0,0,0,0.6)}
+    .eye{position:absolute;left:50%;top:22%;transform:translateX(-50%);width:76px;height:30px;border-radius:8px;background:linear-gradient(90deg,#062a38,#073246);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03)}
+    .eye .shine{width:44px;height:10px;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 18px rgba(0,212,255,0.06);filter:blur(0.2px);animation:scan 3s linear infinite}
+
+    @keyframes scan{0%{transform:translateX(-30%)}50%{transform:translateX(30%)}100%{transform:translateX(-30%)}}
+
+    .antenna{position:absolute;left:50%;top:4%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center}
+    .ant-stick{width:6px;height:30px;background:linear-gradient(180deg,#7ef0ff,#00a6d6);border-radius:4px}
+    .ant-ball{width:12px;height:12px;border-radius:50%;background:linear-gradient(180deg,var(--accent),var(--accent-2));box-shadow:0 6px 20px rgba(0,212,255,0.18)}
+
+    .arm{position:absolute;top:48%;width:40px;height:12px;border-radius:6px;background:linear-gradient(90deg,#062b3b,#0a3746);display:flex;align-items:center;justify-content:center}
+    .arm.left{left:-10px;transform:rotate(-18deg)}
+    .arm.right{right:-10px;transform:rotate(18deg)}
+
+    .tool{width:38px;height:38px;border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03)}
+
+    /* conveyor */
+    .conveyor{position:relative;width:100%;height:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.0));border-radius:6px;margin-top:12px;overflow:hidden}
+    .c-item{width:34px;height:34px;border-radius:8px;background:linear-gradient(180deg,#072a36,#042a2e);display:inline-flex;align-items:center;justify-content:center;margin:6px;float:left;box-shadow:0 8px 22px rgba(2,8,20,0.6)}
+    .conveyor-inner{position:absolute;left:0;top:0;display:flex;gap:6px;animation:slide 3.2s linear infinite}
+    @keyframes slide{0%{transform:translateX(0)}100%{transform:translateX(-40%)} }
+
+
+    /* Right panel */
+    .info{padding:10px 6px}
+    h1{margin:0;font-size:28px}
+    p.lead{color:var(--muted);margin:8px 0 18px}
+
+    .progress{height:14px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,0.02)}
+    .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));animation:grow 5s forwards;box-shadow:0 6px 18px rgba(0,212,255,0.06)}
+    @keyframes grow{0%{width:0}60%{width:68%}100%{width:84%}}
+
+    .meta{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+    .chip{background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:999px;font-size:13px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
+
+    .console{margin-top:18px;background:#031018;padding:12px;border-radius:8px;font-family:var(--mono);font-size:13px;color:var(--muted);min-height:100px;border:1px solid rgba(255,255,255,0.02)}
+    .console .line:before{content:"> ";color:var(--accent);}
+
+    /* footer */
+    .foot{grid-column:1/-1;margin-top:12px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:13px}
+
+    /* responsive */
+    @media (max-width:800px){
+      .card{grid-template-columns:1fr;}
+      .robot{width:220px;height:180px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="robot-stage">
+        <div style="display:flex;flex-direction:column;align-items:flex-start;width:100%">
+          <div class="logo">
+            <div class="spark">TS</div>
+            <div>
+              <div style="font-size:18px">tinysparkapps</div>
+              <div class="brand-sub">building tiny sparks into web apps</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;color:var(--muted);font-size:13px">We’re currently building something special. Robots are on it — heavy soldering &amp; coffee included ☕</div>
+        </div>
+
+        <div class="robot" aria-hidden="true">
+          <div class="antenna">
+            <div class="ant-stick"></div>
+            <div class="ant-ball"></div>
+          </div>
+
+          <div class="eye">
+            <div class="shine"></div>
+          </div>
+
+          <div class="body"></div>
+
+          <div class="arm left" style="top:58%">
+            <div class="tool" id="toolLeft">⚙️</div>
+          </div>
+          <div class="arm right" style="top:58%">
+            <div class="tool" id="toolRight">🪛</div>
+          </div>
+
+          <div style="position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:220px">
+            <div class="conveyor">
+              <div class="conveyor-inner" id="conveyorInner">
+                <div class="c-item">A</div>
+                <div class="c-item">B</div>
+                <div class="c-item">C</div>
+                <div class="c-item">1</div>
+                <div class="c-item">2</div>
+                <div class="c-item">3</div>
+                <div class="c-item">⚡</div>
+                <div class="c-item">🔧</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="width:100%;display:flex;justify-content:center;margin-top:6px;font-size:12px;color:var(--muted)">Robots assembling web modules…</div>
+      </div>
+
+      <div class="info">
+        <h1>Something amazing is under construction</h1>
+        <p class="lead">We’re busy building web apps and polishing tiny sparks into powerful features. ETA: not long — but meaningful.</p>
+
+        <div class="progress" aria-hidden>
+          <div class="bar" id="progressBar"></div>
+        </div>
+
+        <div class="meta">
+          <div class="chip">Status: Building</div>
+          <div class="chip">Platform: Web</div>
+          <div class="chip">Focus: Web apps &amp; tools</div>
+        </div>
+
+        <div class="console" id="console">
+          <div class="line">Initializing builder</div>
+          <div class="line">Loading robot arms</div>
+          <div class="line">Compiling UI components</div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+          <button id="notifyBtn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 14px;border-radius:8px;color:var(--accent);cursor:pointer">Notify me</button>
+          <a href="#" style="color:var(--muted);text-decoration:none;font-size:13px">Contact: tinysparkapps.care@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="foot">
+        <div>tinysparkapps — small team, big ideas</div>
+        <div>© <span id="year"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // small interactive niceties
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const consoleEl = document.getElementById('console');
+    const logs = [
+      'Establishing socket with the robot ","',
+      'Pulling latest design system',
+      'Rendering components',
+      'Running accessibility checks',
+      'Packing modules',
+      'Finalizing assets',
+      'Deployment queued'
+    ];
+
+    let idx = 0;
+    setInterval(()=>{
+      if(idx < logs.length){
+        const div = document.createElement('div');
+        div.className = 'line';
+        div.textContent = logs[idx++];
+        consoleEl.appendChild(div);
+        consoleEl.scrollTop = consoleEl.scrollHeight;
+      }
+    },1800);
+
+    // little tool swap animation for robot arms
+    const leftTool = document.getElementById('toolLeft');
+    const rightTool = document.getElementById('toolRight');
+    const tools = ['⚙️','🪛','🔧','🧰','🧪'];
+    let t=0;
+    setInterval(()=>{
+      leftTool.textContent = tools[t%tools.length];
+      rightTool.textContent = tools[(t+2)%tools.length];
+      t++;
+    },1400);
+
+    // subtle progress pseudo-complete loop
+    const bar = document.getElementById('progressBar');
+    setInterval(()=>{
+      bar.style.width = (40 + Math.floor(Math.random()*50)) + '%';
+    },4000);
+
+    // notify button simple interaction
+    document.getElementById('notifyBtn').addEventListener('click', ()=>{
+      const old = document.getElementById('notifyBtn');
+      old.textContent = 'Thanks — we\'ll ping you';
+      old.disabled = true;
+    });
+  </script>
+</body>
+</html>
 
