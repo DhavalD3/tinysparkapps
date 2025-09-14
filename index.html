@@ -28,6 +28,7 @@
     }
 
     /* Logo */
+    .topbar{position:absolute;top:12px;left:18px;display:flex;align-items:center;gap:14px}
     .logo{
       font-weight:700;font-size:22px;letter-spacing:0.6px;
       display:flex;align-items:center;gap:14px;color:var(--accent-2)
@@ -44,7 +45,7 @@
     .eye{position:absolute;left:50%;top:22%;transform:translateX(-50%);width:76px;height:30px;border-radius:8px;background:linear-gradient(90deg,#062a38,#073246);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03)}
     .eye .shine{width:44px;height:10px;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 18px rgba(0,212,255,0.06);filter:blur(0.2px);animation:scan 3s linear infinite}
 
-    @keyframes scan{0%{transform:translateX(-30%)}50%{transform:translateX(30%)}100%{transform:translateX(-30%)}}
+    @keyframes scan{0%{transform:translateX(-30%)}50%{transform:translateX(30%)}100%{transform:translateX(-30%)} }
 
     .antenna{position:absolute;left:50%;top:4%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center}
     .ant-stick{width:6px;height:30px;background:linear-gradient(180deg,#7ef0ff,#00a6d6);border-radius:4px}
@@ -80,6 +81,7 @@
 
     /* footer */
     .foot{grid-column:1/-1;margin-top:12px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:13px}
+    .foot a{color:var(--muted);text-decoration:none}
 
     /* responsive */
     @media (max-width:800px){
@@ -89,17 +91,20 @@
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <div class="logo">
+      <div class="spark">TS</div>
+      <div>
+        <div style="font-size:18px">tinysparkapps</div>
+        <div class="brand-sub">building tiny sparks into web apps</div>
+      </div>
+    </div>
+  </div>
+
   <div class="wrap">
     <div class="card">
       <div class="robot-stage">
         <div style="display:flex;flex-direction:column;align-items:flex-start;width:100%">
-          <div class="logo">
-            <div class="spark">TS</div>
-            <div>
-              <div style="font-size:18px">tinysparkapps</div>
-              <div class="brand-sub">building tiny sparks into web apps</div>
-            </div>
-          </div>
           <div style="margin-top:12px;color:var(--muted);font-size:13px">We’re currently building something special. Robots are on it — heavy soldering &amp; coffee included ☕</div>
         </div>
 
@@ -169,7 +174,9 @@
 
       <div class="foot">
         <div>tinysparkapps — small team, big ideas</div>
-        <div>© <span id="year"></span></div>
+        <div>
+          <a href="privacy.html">Privacy Policy</a> | © <span id="year"></span>
+        </div>
       </div>
     </div>
   </div>
@@ -226,4 +233,3 @@
   </script>
 </body>
 </html>
-
