@@ -3,7 +3,7 @@ const sharedHeaderMarkup = `
         <div class="nav-container">
             <div class="nav-logo">
                 <img src="assets/icons/icon_64_64.png" alt="TinySpark Apps Logo" class="logo-img" />
-                <span class="logo-text">Tinyspark Apps</span>
+                <span class="logo-text">TinySpark Apps</span>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
