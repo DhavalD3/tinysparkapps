@@ -1,235 +1,309 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>tinysparkapps — Building something amazing</title>
-  <style>
-    :root{
-      --bg:#0f1724;
-      --panel:#0b1b2b;
-      --accent:#00d4ff;
-      --accent-2:#7cffb2;
-      --muted:#9fb3c8;
-      --glass: rgba(255,255,255,0.04);
-      --mono: 'Segoe UI Mono', 'Roboto Mono', monospace;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,-apple-system,Helvetica,Arial; background: radial-gradient(1000px 500px at 10% 10%, rgba(0,212,255,0.03), transparent), var(--bg); color:#e6f0fb}
-
-    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:48px}
-    .card{
-      width:min(980px,96%);
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
-      border:1px solid rgba(255,255,255,0.04);
-      border-radius:16px;
-      padding:28px;display:grid;grid-template-columns:360px 1fr;gap:28px;align-items:center;
-      box-shadow: 0 6px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-    }
-
-    /* Logo */
-    .topbar{position:absolute;top:12px;left:18px;display:flex;align-items:center;gap:14px}
-    .logo{
-      font-weight:700;font-size:22px;letter-spacing:0.6px;
-      display:flex;align-items:center;gap:14px;color:var(--accent-2)
-    }
-    .spark{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(0,212,255,0.08);font-weight:800}
-    .brand-sub{font-size:12px;color:var(--muted);margin-top:6px}
-
-    /* Robot area */
-    .robot-stage{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.0));border-radius:12px;padding:18px;display:flex;flex-direction:column;align-items:center;gap:12px}
-    .robot{width:260px;height:220px;position:relative}
-
-    /* robot parts */
-    .body{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:160px;height:130px;background:linear-gradient(180deg,#0e2a3a,#04202b);border-radius:16px;border:1px solid rgba(255,255,255,0.03);box-shadow:inset 0 4px 14px rgba(0,0,0,0.6)}
-    .eye{position:absolute;left:50%;top:22%;transform:translateX(-50%);width:76px;height:30px;border-radius:8px;background:linear-gradient(90deg,#062a38,#073246);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03)}
-    .eye .shine{width:44px;height:10px;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));box-shadow:0 6px 18px rgba(0,212,255,0.06);filter:blur(0.2px);animation:scan 3s linear infinite}
-
-    @keyframes scan{0%{transform:translateX(-30%)}50%{transform:translateX(30%)}100%{transform:translateX(-30%)} }
-
-    .antenna{position:absolute;left:50%;top:4%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center}
-    .ant-stick{width:6px;height:30px;background:linear-gradient(180deg,#7ef0ff,#00a6d6);border-radius:4px}
-    .ant-ball{width:12px;height:12px;border-radius:50%;background:linear-gradient(180deg,var(--accent),var(--accent-2));box-shadow:0 6px 20px rgba(0,212,255,0.18)}
-
-    .arm{position:absolute;top:48%;width:40px;height:12px;border-radius:6px;background:linear-gradient(90deg,#062b3b,#0a3746);display:flex;align-items:center;justify-content:center}
-    .arm.left{left:-10px;transform:rotate(-18deg)}
-    .arm.right{right:-10px;transform:rotate(18deg)}
-
-    .tool{width:38px;height:38px;border-radius:8px;background:var(--glass);display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,0.03)}
-
-    /* conveyor */
-    .conveyor{position:relative;width:100%;height:10px;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(0,0,0,0.0));border-radius:6px;margin-top:12px;overflow:hidden}
-    .c-item{width:34px;height:34px;border-radius:8px;background:linear-gradient(180deg,#072a36,#042a2e);display:inline-flex;align-items:center;justify-content:center;margin:6px;float:left;box-shadow:0 8px 22px rgba(2,8,20,0.6)}
-    .conveyor-inner{position:absolute;left:0;top:0;display:flex;gap:6px;animation:slide 3.2s linear infinite}
-    @keyframes slide{0%{transform:translateX(0)}100%{transform:translateX(-40%)} }
-
-
-    /* Right panel */
-    .info{padding:10px 6px}
-    h1{margin:0;font-size:28px}
-    p.lead{color:var(--muted);margin:8px 0 18px}
-
-    .progress{height:14px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,0.02)}
-    .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));animation:grow 5s forwards;box-shadow:0 6px 18px rgba(0,212,255,0.06)}
-    @keyframes grow{0%{width:0}60%{width:68%}100%{width:84%}}
-
-    .meta{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
-    .chip{background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:999px;font-size:13px;color:var(--muted);border:1px solid rgba(255,255,255,0.02)}
-
-    .console{margin-top:18px;background:#031018;padding:12px;border-radius:8px;font-family:var(--mono);font-size:13px;color:var(--muted);min-height:100px;border:1px solid rgba(255,255,255,0.02)}
-    .console .line:before{content:"> ";color:var(--accent);}
-
-    /* footer */
-    .foot{grid-column:1/-1;margin-top:12px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:13px}
-    .foot a{color:var(--muted);text-decoration:none}
-
-    /* responsive */
-    @media (max-width:800px){
-      .card{grid-template-columns:1fr;}
-      .robot{width:220px;height:180px}
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TinySpark Apps</title>
+    
+    <!-- Favicon - Multiple Sizes for All Devices -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/icon_16_16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/icon_32_32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="assets/icons/icon_48_48.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="assets/icons/icon_64_64.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/icons/icon_96_96.png" />
+    <link rel="icon" type="image/png" sizes="128x128" href="assets/icons/icon_128_128.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/icon_192_192.png" />
+    <link rel="icon" type="image/png" sizes="256x256" href="assets/icons/icon_256_256.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/icons/icon_512_512.png" />
+    
+    <!-- Apple Touch Icon for iOS -->
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/icons/icon_57_57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/icons/icon_72_72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/icons/icon_76_76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/icons/icon_114_114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/icons/icon_120_120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/icons/icon_144_144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/icons/icon_152_152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon_180_180.png" />
+    
+    <!-- Android Chrome Icons -->
+    <link rel="android-chrome" sizes="192x192" href="assets/icons/icon_192_192.png" />
+    <link rel="android-chrome" sizes="256x256" href="assets/icons/icon_256_256.png" />
+    <link rel="android-chrome" sizes="384x384" href="assets/icons/icon_384_384.png" />
+    <link rel="android-chrome" sizes="512x512" href="assets/icons/icon_512_512.png" />
+    
+    <!-- Microsoft Edge / Windows -->
+    <meta name="msapplication-TileImage" content="assets/icons/icon_144_144.png" />
+    <meta name="msapplication-TileColor" content="#4F46E5" />
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#4F46E5" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- External CSS -->
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="topbar">
-    <div class="logo">
-      <div class="spark">TS</div>
-      <div>
-        <div style="font-size:18px">tinysparkapps</div>
-        <div class="brand-sub">building tiny sparks into mobile apps</div>
-      </div>
-    </div>
-  </div>
+    <div id="site-header"></div>
 
-  <div class="wrap">
-    <div class="card">
-      <div class="robot-stage">
-        <div style="display:flex;flex-direction:column;align-items:flex-start;width:100%">
-          <div style="margin-top:12px;color:var(--muted);font-size:13px">We’re currently building something special. Robots are on it — heavy soldering &amp; coffee included ☕</div>
-        </div>
-
-        <div class="robot" aria-hidden="true">
-          <div class="antenna">
-            <div class="ant-stick"></div>
-            <div class="ant-ball"></div>
-          </div>
-
-          <div class="eye">
-            <div class="shine"></div>
-          </div>
-
-          <div class="body"></div>
-
-          <div class="arm left" style="top:58%">
-            <div class="tool" id="toolLeft">⚙️</div>
-          </div>
-          <div class="arm right" style="top:58%">
-            <div class="tool" id="toolRight">🪛</div>
-          </div>
-
-          <div style="position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:220px">
-            <div class="conveyor">
-              <div class="conveyor-inner" id="conveyorInner">
-                <div class="c-item">A</div>
-                <div class="c-item">B</div>
-                <div class="c-item">C</div>
-                <div class="c-item">1</div>
-                <div class="c-item">2</div>
-                <div class="c-item">3</div>
-                <div class="c-item">⚡</div>
-                <div class="c-item">🔧</div>
-              </div>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-bolt"></i>
+                    AI-Powered Software Solutions
+                </div>
+                <h1>Build <span class="highlight">Anything</span> You Can Imagine</h1>
+                <p>
+                    From web and mobile to desktop and beyond — we craft scalable,
+                    future-ready software tailored to your vision.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> Start Your Project
+                    </a>
+                    <a href="#about" class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i> Learn More
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Years Experience</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Support</span>
+                    </div>
+                </div>
             </div>
-          </div>
+            <div class="hero-visual">
+                <div class="floating-cards">
+                    <div class="card-item card-1">
+                        <i class="fas fa-globe"></i>
+                        <span>Web Apps</span>
+                    </div>
+                    <div class="card-item card-2">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Mobile Apps</span>
+                    </div>
+                    <div class="card-item card-3">
+                        <i class="fas fa-desktop"></i>
+                        <span>Desktop Apps</span>
+                    </div>
+                    <div class="card-item card-4">
+                        <i class="fas fa-cloud"></i>
+                        <span>Cloud Solutions</span>
+                    </div>
+                    <div class="card-item card-5">
+                        <i class="fas fa-brain"></i>
+                        <span>AI/ML</span>
+                    </div>
+                    <div class="card-item card-6">
+                        <i class="fas fa-robot"></i>
+                        <span>Chatbots</span>
+                    </div>
+                    <div class="card-item card-7">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Cybersecurity</span>
+                    </div>
+                    <div class="card-item card-8">
+                        <i class="fas fa-vial"></i>
+                        <span>Test Automation</span>
+                    </div>
+                    <div class="card-item card-9">
+                        <i class="fas fa-cogs"></i>
+                        <span>Performance Improvement</span>
+                    </div>
+                    <!-- card-10 hidden -->
+                </div>
+                <div class="orb orb-1"></div>
+                <div class="orb orb-2"></div>
+                <div class="orb orb-3"></div>
+            </div>
         </div>
+    </section>
 
-        <div style="width:100%;display:flex;justify-content:center;margin-top:6px;font-size:12px;color:var(--muted)">Robots assembling web modules…</div>
-      </div>
-
-      <div class="info">
-        <h1>Something amazing is under construction</h1>
-        <p class="lead">We’re busy building mobile apps and polishing tiny sparks into powerful features. ETA: not long — but meaningful.</p>
-
-        <div class="progress" aria-hidden>
-          <div class="bar" id="progressBar"></div>
+    <!-- About Us Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">About Us</span>
+                <h2>Who We Are</h2>
+                <p class="section-subtitle">
+                    Passionate developers building the future, one line of code at a time.
+                </p>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        We are a team of seasoned software engineers with over a decade of
+                        combined experience in the industry. Having worked in some of the
+                        world's leading multinational corporations, we bring enterprise-grade
+                        expertise to every project we undertake.
+                    </p>
+                    <p>
+                        Our mission is simple — to deliver clean, efficient, and scalable
+                        software solutions that drive real business value. Whether it's a
+                        cutting-edge web platform, a native mobile experience, or robust
+                        desktop software, we approach every challenge with the same
+                        dedication and craftsmanship.
+                    </p>
+                    <p>
+                        At TinySpark Apps, we believe in collaboration, transparency, and
+                        continuous learning. We don't just build software — we build
+                        partnerships that last.
+                    </p>
+                    <div class="about-values">
+                        <div class="value-item">
+                            <i class="fas fa-code"></i>
+                            <div>
+                                <h4>Clean Code</h4>
+                                <p>Readable, maintainable, and well-documented.</p>
+                            </div>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>Client-Centric</h4>
+                                <p>Your vision is our roadmap.</p>
+                            </div>
+                        </div>
+                        <div class="value-item">
+                            <i class="fas fa-rocket"></i>
+                            <div>
+                                <h4>Agile Delivery</h4>
+                                <p>Fast iterations without compromising quality.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="about-illustration">
+                        <i class="fas fa-people-arrows"></i>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="meta">
-          <div class="chip">Status: Building</div>
-          <div class="chip">Platform: Web</div>
-          <div class="chip">Focus: mobile apps &amp; tools</div>
+    <!-- Services / Solutions -->
+    <section class="solutions">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">What We Offer</span>
+                <h2>End-to-End Software Development</h2>
+                <p class="section-subtitle">
+                    From traditional apps to cutting-edge AI — we build it all.
+                </p>
+            </div>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Web Applications</h3>
+                    <p>Responsive, performant, and secure web experiences built with modern frameworks.</p>
+                </div>
+                <div class="solution-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Mobile Applications</h3>
+                    <p>Native and cross-platform apps for iOS and Android that users love.</p>
+                </div>
+                <div class="solution-card">
+                    <i class="fas fa-desktop"></i>
+                    <h3>Desktop Applications</h3>
+                    <p>Powerful, offline-ready software for Windows, macOS, and Linux.</p>
+                </div>
+                <div class="solution-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Artificial Intelligence & ML</h3>
+                    <p>Custom AI models, NLP, computer vision, and predictive analytics solutions.</p>
+                </div>
+                <div class="solution-card">
+                    <i class="fas fa-robot"></i>
+                    <h3>Chatbots & Automation</h3>
+                    <p>Intelligent chatbots, RPA, and workflow automation using LLMs and AI agents.</p>
+                </div>
+                <div class="solution-card">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Cloud & DevOps</h3>
+                    <p>Scalable cloud architectures, CI/CD pipelines, and infrastructure as code.</p>
+                </div>
+                <div class="solution-card">
+                    <i class="fas fa-database"></i>
+                    <h3>Data & Analytics</h3>
+                    <p>Data-driven insights with robust ETL pipelines and visualization dashboards.</p>
+                </div>
+                <div class="solution-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Security & Compliance</h3>
+                    <p>Enterprise-grade security audits, encryption, and compliance frameworks.</p>
+                </div>
+                <div class="solution-card">
+                    <i class="fas fa-vial"></i>
+                    <h3>Test Automation</h3>
+                    <p>Comprehensive test automation frameworks for web, mobile, and API testing with CI/CD integration.</p>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="console" id="console">
-          <div class="line">Initializing builder</div>
-          <div class="line">Loading robot arms</div>
-          <div class="line">Compiling UI components</div>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Contact Us</span>
+                <h2>Let's Talk</h2>
+                <p class="section-subtitle">
+                    Have a project in mind? We'd love to hear from you.
+                </p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h4>Email</h4>
+                        <a href="mailto:tinysparkapps.care@gmail.com">tinysparkapps.care@gmail.com</a>
+                        <p>We reply within 24 hours</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h4>Working Hours</h4>
+                        <p>Mon - Fri: 9:00 AM - 6:00 PM</p>
+                        <p>Weekends: By appointment</p>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <div class="google-form-container">
+                        <iframe
+                            src="https://docs.google.com/forms/d/e/1FAIpQLScT0kdNbURFj8mGKqL1s_8UugWdGw-pMeKZ7thG3v8n6uTvPg/viewform?usp=publish-editor/viewform?embedded=true"
+                            width="100%"
+                            height="600"
+                            frameborder="0"
+                            marginheight="0"
+                            marginwidth="0"
+                            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                            Loading…
+                        </iframe>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
-          <button id="notifyBtn" style="background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 14px;border-radius:8px;color:var(--accent);cursor:pointer">Notify me</button>
-          <a href="#" style="color:var(--muted);text-decoration:none;font-size:13px">Contact: tinysparkapps.care@gmail.com</a>
-        </div>
-      </div>
+    <!-- Internship section removed from this page. Now linked to separate internship.html -->
 
-      <div class="foot">
-        <div>tinysparkapps — small team, big ideas</div>
-        <div>
-          <a href="privacy-policy.html">Privacy Policy</a> | © <span id="year"></span>
-        </div>
-      </div>
-    </div>
-  </div>
+    <div id="site-footer"></div>
 
-  <script>
-    // small interactive niceties
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const consoleEl = document.getElementById('console');
-    const logs = [
-      'Establishing socket with the robot ","',
-      'Pulling latest design system',
-      'Rendering components',
-      'Running accessibility checks',
-      'Packing modules',
-      'Finalizing assets',
-      'Deployment queued'
-    ];
-
-    let idx = 0;
-    setInterval(()=>{
-      if(idx < logs.length){
-        const div = document.createElement('div');
-        div.className = 'line';
-        div.textContent = logs[idx++];
-        consoleEl.appendChild(div);
-        consoleEl.scrollTop = consoleEl.scrollHeight;
-      }
-    },1800);
-
-    // little tool swap animation for robot arms
-    const leftTool = document.getElementById('toolLeft');
-    const rightTool = document.getElementById('toolRight');
-    const tools = ['⚙️','🪛','🔧','🧰','🧪'];
-    let t=0;
-    setInterval(()=>{
-      leftTool.textContent = tools[t%tools.length];
-      rightTool.textContent = tools[(t+2)%tools.length];
-      t++;
-    },1400);
-
-    // subtle progress pseudo-complete loop
-    const bar = document.getElementById('progressBar');
-    setInterval(()=>{
-      bar.style.width = (40 + Math.floor(Math.random()*50)) + '%';
-    },4000);
-
-    // notify button simple interaction
-    document.getElementById('notifyBtn').addEventListener('click', ()=>{
-      const old = document.getElementById('notifyBtn');
-      old.textContent = 'Thanks — we\'ll ping you';
-      old.disabled = true;
-    });
-  </script>
+    <!-- External JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>
