@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - TinySpark Apps</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+        }
+
+        h3 {
+            color: #555;
+            margin-top: 20px;
+        }
+
+        .highlight {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-left: 4px solid #3498db;
+            margin: 20px 0;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+<h1>Privacy Policy for Milkman</h1>
+
+<p><strong>Last Updated:</strong> November 18, 2026</p>
+
+<div class="highlight">
+    <strong>Quick Summary:</strong>
+    Milkman is an offline-first delivery tracking and billing app built by TinySpark Apps. Your delivery logs, customer records, items, and bills are stored locally on your device so you can work without internet, and are synced to a secure cloud database (Neon PostgreSQL) for backup and syncing between a Dairy Owner and their assigned Staff members. You sign in with your Google Account, and optional subscriptions are processed through Google Play. We do not sell your personal or business data.
+</div>
+
+<h2>1. Information You Provide and Store in the App</h2>
+
+<p>
+    To enable daily milk delivery tracking, billing, and multi-device syncing between Dairy Owners and Staff members, Milkman collects and stores the following information:
+</p>
+
+<h3>Account and Business Profile Information</h3>
+
+<ul>
+    <li><strong>Google Sign-In Details:</strong> When you sign in with Google, we receive your basic account identifier, email address, and display name to create and authenticate your Dairy Owner or Staff account.</li>
+    <li><strong>Business Profile (Dairy Owners):</strong> If you register as a Dairy Owner, you provide your Business Name, Country, Phone Number (with country code), Street Address, City, State, and Pincode.</li>
+    <li><strong>Team &amp; Staff Links:</strong> If you join a dairy as a Staff member by scanning an Owner's QR code or entering an invite code, your account is linked to that Dairy Owner's workspace so you can view and update assigned deliveries.</li>
+</ul>
+
+<h3>Customer, Delivery, and Billing Records</h3>
+
+<ul>
+    <li><strong>Customer Profiles:</strong> Names (optional), delivery addresses (required), phone numbers (optional), delivery route order, pause schedules, and assigned delivery staff.</li>
+    <li><strong>Product Catalog &amp; Pricing:</strong> Dairy items, units, prices, and effective dates added by the Dairy Owner.</li>
+    <li><strong>Delivery Logs &amp; Billing History:</strong> Daily delivery statuses (pending, delivered, skipped), item quantities, generated bills, and recorded payment histories.</li>
+</ul>
+
+<p>
+    <strong>Important Note on Customer Data:</strong> As a Dairy Owner or Staff member entering customer names, addresses, and phone numbers into Milkman, you are responsible for ensuring that you have the appropriate permission from your customers to record and manage their delivery and billing details.
+</p>
+
+<h2>2. Device Permissions</h2>
+
+<p>
+    Milkman requests only the device permissions necessary for its core features. The app does not track your GPS location or read your phone's contact list in the background.
+</p>
+
+<h3>Camera</h3>
+
+<p>
+    The app requests camera access solely when a Staff member chooses to scan a Dairy Owner's onboarding QR code. Camera frames are processed locally on your device to read the QR code and are never saved or uploaded.
+</p>
+
+<h3>Biometric / Fingerprint Authentication</h3>
+
+<p>
+    If you enable the optional <strong>Fingerprint / Biometric Lock</strong> in Settings, Milkman uses Android's built-in biometric prompt to verify your identity before opening the app. TinySpark Apps never accesses, receives, or stores your fingerprint or biometric data.
+</p>
+
+<h3>Phone Calls, WhatsApp, and Sharing</h3>
+
+<p>
+    When you tap the <strong>Call</strong> or <strong>WhatsApp</strong> icons on a customer's profile, or share a generated bill, Milkman hands the phone number or bill summary text to your device's Phone dialer, WhatsApp, or chosen sharing app. Those external apps handle the communication under their own privacy policies.
+</p>
+
+<h2>3. Local Storage, Cloud Sync, and Third-Party Services</h2>
+
+<p>
+    Milkman is designed to work offline first. Your data is stored in a local SQLite database on your device and synced periodically when an internet connection is available. As with any internet connection, network providers and servers involved in syncing may receive standard connection metadata such as your IP address.
+</p>
+
+<h3>Cloud Database &amp; Authentication (Neon)</h3>
+
+<p>
+    We use <strong>Neon</strong> (managed PostgreSQL database and authentication services) to authenticate your Google Sign-In session, back up your dairy's records, and sync updates between the Dairy Owner's device and linked Staff devices. Data transmitted between your device and Neon is encrypted in transit using HTTPS/TLS, and access is strictly isolated using Row-Level Security (RLS) so only authorized members of your specific dairy can access your records.
+</p>
+
+<h3>Google Sign-In</h3>
+
+<p>
+    Milkman uses Google Sign-In for account authentication. Authentication tokens are stored securely on your device using Android's encrypted storage (`Keystore`) so you remain signed in without repeatedly entering your credentials. Google's handling of your sign-in is governed by <a href="https://policies.google.com/privacy">Google's Privacy Policy</a>.
+</p>
+
+<h3>Subscriptions and Purchases (Google Play)</h3>
+
+<p>
+    Milkman offers optional paid subscription plans (Monthly, 6-Month, and 1-Year) through Google Play Billing to unlock limits beyond the free tier. All payments are processed securely by Google Play under its own terms and privacy practices. TinySpark Apps does not receive or store your credit card, debit card, or UPI payment credentials; we receive only purchase tokens and subscription status from Google Play to activate and restore your subscription.
+</p>
+
+<h2>4. How Information Is Used</h2>
+
+<ul>
+    <li>To authenticate your account and keep you signed in across sessions.</li>
+    <li>To generate daily delivery logs, calculate item prices by effective date, and create customer bills.</li>
+    <li>To back up your business data and synchronize delivery updates between a Dairy Owner and their linked Staff members.</li>
+    <li>To verify and restore active Google Play subscriptions.</li>
+    <li>To respond to support inquiries when you contact us by email.</li>
+</ul>
+
+<p>We do not sell, rent, or trade your personal information or your customers' information to third parties.</p>
+
+<h2>5. Data Retention, Account Deletion, and Your Choices</h2>
+
+<ul>
+    <li><strong>Local &amp; Cloud Retention:</strong> Your business, customer, delivery, and billing records remain stored on your device and in your synced cloud workspace for as long as you maintain your account so you can access historical bills and logs.</li>
+    <li><strong>In-App Account Deletion:</strong> You can delete your account at any time directly inside the app via <strong>Settings &rarr; Delete My Account</strong>. If you are a Staff member, this removes your access and unlinks your account from the dairy. If you are a Dairy Owner, deleting your account removes your business profile, staff links, customer records, delivery logs, and bills from our cloud database and clears local app data from your device.</li>
+    <li><strong>Device Controls:</strong> You can revoke camera permissions or disable fingerprint lock at any time through the app's Settings or your Android device settings.</li>
+    <li><strong>Managing Subscriptions:</strong> You can manage or cancel your subscription at any time through your Google Play Store account settings.</li>
+</ul>
+
+<h2>6. Children's Privacy</h2>
+
+<p>
+    Milkman is a business utility application intended for dairy owners and delivery personnel. It is not directed to children under the age of 13 (or the applicable age of digital consent in your country), and we do not knowingly collect personal information from children.
+</p>
+
+<h2>7. Changes to This Privacy Policy</h2>
+
+<p>
+    We may update this Privacy Policy from time to time as we add new features or update our services. Any changes will be posted on this page along with an updated revision date.
+</p>
+
+<h2>8. Contact Us</h2>
+
+<p>If you have any questions, concerns, or requests regarding this Privacy Policy or your data, please contact us:</p>
+<ul>
+    <li><strong>Developer / Company:</strong> TinySpark Apps</li>
+    <li><strong>Email:</strong> tinysparkapps.care@gmail.com</li>
+</ul>
+
+<div class="footer">
+    This Privacy Policy is effective as of November 18, 2026.
+</div>
+
+</div>
+</body>
+</html>
